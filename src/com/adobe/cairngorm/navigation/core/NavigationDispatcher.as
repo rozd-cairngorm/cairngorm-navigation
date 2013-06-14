@@ -22,16 +22,20 @@
  */
 package com.adobe.cairngorm.navigation.core
 {
-    import com.adobe.cairngorm.LogUtil;
     import com.adobe.cairngorm.navigation.NavigationUtil;
 
     import flash.events.IEventDispatcher;
 
-    import mx.logging.ILogger;
 
-    public class NavigationDispatcher
+import org.spicefactory.lib.logging.LogContext;
+
+import org.spicefactory.lib.logging.LogFactory;
+
+import org.spicefactory.lib.logging.Logger;
+
+public class NavigationDispatcher
     {
-        private static const LOG:ILogger = LogUtil.getLogger(NavigationDispatcher);
+        private static const LOG:Logger = LogContext.getLogger(NavigationDispatcher);
 
         private var dispatcher:IEventDispatcher;
 

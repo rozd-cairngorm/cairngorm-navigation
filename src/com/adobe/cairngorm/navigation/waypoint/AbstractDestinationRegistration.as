@@ -22,13 +22,11 @@
  */
 package com.adobe.cairngorm.navigation.waypoint
 {
-    import com.adobe.cairngorm.navigation.core.INavigationRegistry;
-    
-    import flash.events.EventDispatcher;
-    
-    import mx.core.UIComponent;
+import com.adobe.cairngorm.navigation.core.INavigationRegistry;
 
-    [Event(name="waypointFound", type="com.adobe.cairngorm.navigation.waypoint.WaypointEvent")]
+import flash.events.EventDispatcher;
+
+[Event(name="waypointFound", type="com.adobe.cairngorm.navigation.waypoint.WaypointEvent")]
     public class AbstractDestinationRegistration extends EventDispatcher
     {
         public static const WAYPOINT_FOUND:String = "waypointFound";
@@ -49,14 +47,14 @@ package com.adobe.cairngorm.navigation.waypoint
 		}		
 		
 		
-		public function registerDestinations(view:UIComponent):void
+		public function registerDestinations(view:Object):void
 		{
 			_view = view;
 			onRegisterDestinations();
 		}
 		
-		private var _view:UIComponent;		
-		protected function get view():UIComponent
+		private var _view:Object;
+		protected function get view():Object
 		{
 			return _view;
 		}

@@ -25,8 +25,6 @@ package com.adobe.cairngorm.navigation.waypoint
     import com.adobe.cairngorm.navigation.NavigationEvent;
     
     import flash.events.EventDispatcher;
-    
-    import mx.core.UIComponent;
 
     [Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
     public class AbstractWaypoint extends EventDispatcher
@@ -38,7 +36,7 @@ package com.adobe.cairngorm.navigation.waypoint
 			return _selectedIndex;
 		}
 
-        protected var view:UIComponent;
+        protected var view:Object;
 		
 		protected var _registration:IDestinationRegistration;
 		

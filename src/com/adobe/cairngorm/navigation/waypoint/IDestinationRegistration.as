@@ -22,18 +22,16 @@
  */
 package com.adobe.cairngorm.navigation.waypoint
 {
-	import com.adobe.cairngorm.navigation.core.INavigationRegistry;
-	
-	import flash.events.IEventDispatcher;
-	
-	import mx.core.UIComponent;
+import com.adobe.cairngorm.navigation.core.INavigationRegistry;
 
-	[Event(name="waypointFound", type="com.adobe.cairngorm.navigation.waypoint.WaypointEvent")]
+import flash.events.IEventDispatcher;
+
+[Event(name="waypointFound", type="com.adobe.cairngorm.navigation.waypoint.WaypointEvent")]
 	public interface IDestinationRegistration extends IEventDispatcher
 	{
 		function initialize(controller:INavigationRegistry, name:String=null):void;
 		
-		function registerDestinations(view:UIComponent):void;
+		function registerDestinations(view:Object):void;
 		function unregisterDestinations():void;
 		
 		function get hasRegisteredChildren():Boolean;

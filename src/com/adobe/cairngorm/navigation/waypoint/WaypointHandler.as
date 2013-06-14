@@ -31,8 +31,6 @@ package com.adobe.cairngorm.navigation.waypoint
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
-	import mx.core.UIComponent;
-
 	[Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
 	public class WaypointHandler extends EventDispatcher
 	{
@@ -65,7 +63,7 @@ package com.adobe.cairngorm.navigation.waypoint
 			_name = name;
 		}
 		
-		public function createWaypoint(container:UIComponent, mode:String, waypointType:Class, isWaypointType:Function):void
+		public function createWaypoint(container:Object, mode:String, waypointType:Class, isWaypointType:Function):void
 		{
 			_waypoint=createConcreteWaypoint(mode, waypointType, name, isWaypointType);
 			_waypoint.addEventListener(NavigationEvent.NAVIGATE_TO, handleNavigateTo);
@@ -100,7 +98,7 @@ package com.adobe.cairngorm.navigation.waypoint
 			var waypoint:IWaypoint;
 			if (waypointType == null && mode == null)
 			{
-				waypoint = new SelectedChildWaypoint();
+				waypoint = WaypointRegistry.getSelectedChildWaypoint();
 				waypoint.registration.initialize(controller);
 			}
 			else if (mode == "states")
@@ -109,7 +107,7 @@ package com.adobe.cairngorm.navigation.waypoint
 				{
 					throw new Error("When using view states, you must specify a the name property for the waypoint.");
 				}
-				waypoint = new CurrentStateWaypoint();
+				waypoint = WaypointRegistry.getCurrentStateWaypoint();
 				waypoint.registration.initialize(controller, name);
 			}
 			else if (waypointType && isWaypointType(waypointType))

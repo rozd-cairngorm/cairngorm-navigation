@@ -22,14 +22,11 @@
  */
 package com.adobe.cairngorm.navigation.waypoint
 {
-	import com.adobe.cairngorm.navigation.NavigationEvent;
-	import com.adobe.cairngorm.navigation.core.NavigationController;
-	
-	import flash.events.IEventDispatcher;
-	
-	import mx.core.UIComponent;
-	
-	[Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
+import com.adobe.cairngorm.navigation.NavigationEvent;
+
+import flash.events.IEventDispatcher;
+
+[Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
 	public interface IWaypoint extends IEventDispatcher
 	{
 		function get registration():IDestinationRegistration;
@@ -37,7 +34,7 @@ package com.adobe.cairngorm.navigation.waypoint
 		function get selectedIndex():int;
 		function getDefaultDestination():String;
 		
-		function subscribeToViewChange(view:UIComponent):void;		
+		function subscribeToViewChange(view:Object):void;
 		function handleNavigationChange(event:NavigationEvent):void;
 	}
 }
