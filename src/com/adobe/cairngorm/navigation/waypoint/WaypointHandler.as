@@ -169,6 +169,7 @@ package com.adobe.cairngorm.navigation.waypoint
 		public function destroy():void
 		{
 			controller.removeEventListener(name, convertEvent);
+            waypoint.unsubscribeFromViewChange();
 			registration.unregisterDestinations();			
 		}	
 	}

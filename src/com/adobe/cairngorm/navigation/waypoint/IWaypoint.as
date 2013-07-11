@@ -27,14 +27,16 @@ import com.adobe.cairngorm.navigation.NavigationEvent;
 import flash.events.IEventDispatcher;
 
 [Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
-	public interface IWaypoint extends IEventDispatcher
-	{
-		function get registration():IDestinationRegistration;
-		
-		function get selectedIndex():int;
-		function getDefaultDestination():String;
-		
-		function subscribeToViewChange(view:Object):void;
-		function handleNavigationChange(event:NavigationEvent):void;
-	}
+public interface IWaypoint extends IEventDispatcher
+{
+    function get registration():IDestinationRegistration;
+
+    function get selectedIndex():int;
+    function getDefaultDestination():String;
+
+    function subscribeToViewChange(view:Object):void;
+    function unsubscribeFromViewChange():void;
+
+    function handleNavigationChange(event:NavigationEvent):void;
+}
 }
