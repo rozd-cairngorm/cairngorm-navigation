@@ -22,104 +22,123 @@
  */
 package com.adobe.cairngorm.navigation
 {
-	import flash.events.Event;
+import flash.events.Event;
 
-	public class NavigationEvent extends Event
-	{
-		//------------------------------------------------------------------------
-		//
-		//  Constants
-		//
-		//------------------------------------------------------------------------
+public class NavigationEvent extends Event
+{
+    //------------------------------------------------------------------------
+    //
+    //  Constants
+    //
+    //------------------------------------------------------------------------
 
-		public static const NAVIGATE_TO:String="navigateTo";
-		public static const NAVIGATE_AWAY:String="navigateAway";
+    public static const NAVIGATE_TO:String="navigateTo";
+    public static const NAVIGATE_AWAY:String="navigateAway";
 
-		//------------------------------------------------------------------------
-		//
-		//  Static Factory Methods
-		//
-		//------------------------------------------------------------------------
+    //------------------------------------------------------------------------
+    //
+    //  Static Factory Methods
+    //
+    //------------------------------------------------------------------------
 
-		[Deprecated(replacement="com.adobe.cairngorm.navigation.NavigationEvent.createNavigateToEvent()", since="1.0")]	
-		public static function newNavigateToEvent(destination:String):NavigationEvent
-		{
-			return createNavigateToEvent(destination);
-		}
+    [Deprecated(replacement="com.adobe.cairngorm.navigation.NavigationEvent.createNavigateToEvent()", since="1.0")]
+    public static function newNavigateToEvent(destination:String):NavigationEvent
+    {
+        return createNavigateToEvent(destination);
+    }
 
-		[Deprecated(replacement="com.adobe.cairngorm.navigation.NavigationEvent.createNavigateAwayEvent()", since="1.0")]	
-		public static function newNavigateAwayEvent(destination:String):NavigationEvent
-		{
-			return createNavigateAwayEvent(destination);
-		}
-				
-		public static function createNavigateToEvent(destination:String):NavigationEvent
-		{
-			var event:NavigationEvent=new NavigationEvent(NAVIGATE_TO, destination);
-			return event;
-		}
-		
-		public static function createNavigateAwayEvent(destination:String):NavigationEvent
-		{
-			var event:NavigationEvent=new NavigationEvent(NAVIGATE_AWAY, destination);
-			return event;
-		}		
+    [Deprecated(replacement="com.adobe.cairngorm.navigation.NavigationEvent.createNavigateAwayEvent()", since="1.0")]
+    public static function newNavigateAwayEvent(destination:String):NavigationEvent
+    {
+        return createNavigateAwayEvent(destination);
+    }
 
-		//------------------------------------------------------------------------
-		//
-		//  Constructor
-		//
-		//------------------------------------------------------------------------
+    public static function createNavigateToEvent(destination:String, implicit:Boolean=false):NavigationEvent
+    {
+        var event:NavigationEvent=new NavigationEvent(NAVIGATE_TO, destination, implicit);
+        return event;
+    }
 
-		public function NavigationEvent(type:String, destination:String, bubbles:Boolean=true, cancelable:Boolean=false)
-		{
-			super(type, bubbles, cancelable);
-			_destination=destination;
-		}
+    public static function createNavigateAwayEvent(destination:String, implicit:Boolean=false):NavigationEvent
+    {
+        var event:NavigationEvent=new NavigationEvent(NAVIGATE_AWAY, destination, implicit);
+        return event;
+    }
 
-		//------------------------------------------------------------------------
-		//
-		//  Properties
-		//
-		//------------------------------------------------------------------------
+    //------------------------------------------------------------------------
+    //
+    //  Constructor
+    //
+    //------------------------------------------------------------------------
 
-		//-------------------------------
-		//  destination
-		//-------------------------------
+    public function NavigationEvent(type:String, destination:String, implicit:Boolean, bubbles:Boolean=true, cancelable:Boolean=false)
+    {
+        super(type, bubbles, cancelable);
+        _destination=destination;
+        _implicit = implicit;
+    }
 
-		private var _destination:String;
+    //------------------------------------------------------------------------
+    //
+    //  Properties
+    //
+    //------------------------------------------------------------------------
 
-		/**
-		 * The destination to navigate to. This is a compound string with the
-		 * following form "waypoint.direction", where waypoint is a named and
-		 * registered waypoint, and direction is one of the available directions
-		 * for that waypoint.
-		 */
-		[ModuleId]
-		public function get destination():String
-		{
-			return _destination;
-		}
+    //-------------------------------
+    //  destination
+    //-------------------------------
 
-		//-------------------------------
-		//  waypoint
-		//-------------------------------
+    private var _destination:String;
 
-		public function get waypoint():String
-		{
-			return NavigationUtil.getParent(_destination);
-		}
+    /**
+     * The destination to navigate to. This is a compound string with the
+     * following form "waypoint.direction", where waypoint is a named and
+     * registered waypoint, and direction is one of the available directions
+     * for that waypoint.
+     */
+    [ModuleId]
+    public function get destination():String
+    {
+        return _destination;
+    }
 
-		//------------------------------------------------------------------------
-		//
-		//  Overrides : Event
-		//
-		//------------------------------------------------------------------------
+    //-------------------------------
+    //  waypoint
+    //-------------------------------
 
-		override public function clone():Event
-		{
-			var event:NavigationEvent=new NavigationEvent(type, destination, bubbles, cancelable);
-			return event;
-		}
-	}
+    public function get waypoint():String
+    {
+        return NavigationUtil.getParent(_destination);
+    }
+
+    //-------------------------------
+    //  implicit
+    //-------------------------------
+
+    private var _implicit:Boolean;
+
+    /**
+     * A flag that indicates if this event was created internally by the library,
+     * and could be ignored by History - <code>true</code>, or this even should
+     * be processed by History - <code>false</code>.
+     *
+     * <p>Note: It make sens for History management only.</p>
+     */
+    public function get implicit():Boolean
+    {
+        return _implicit;
+    }
+
+    //------------------------------------------------------------------------
+    //
+    //  Overrides : Event
+    //
+    //------------------------------------------------------------------------
+
+    override public function clone():Event
+    {
+        var event:NavigationEvent=new NavigationEvent(type, destination, implicit, bubbles, cancelable);
+        return event;
+    }
+}
 }
