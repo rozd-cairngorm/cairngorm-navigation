@@ -22,78 +22,72 @@
  */
 package com.adobe.cairngorm.navigation.history
 {
-    import com.adobe.cairngorm.navigation.NavigationEvent;
+import com.adobe.cairngorm.navigation.NavigationEvent;
 
-    import flash.events.EventDispatcher;
-    import flash.utils.Dictionary;
+import flash.events.EventDispatcher;
+import flash.utils.Dictionary;
 
-    [Event(name="add", type="com.adobe.cairngorm.navigation.history.WaypointHistoriesEvent")]
-    [Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
-	[Event(name="navigateAway", type="com.adobe.cairngorm.navigation.NavigationEvent")]
-    public class WaypointHistories extends EventDispatcher
+[Event(name="add", type="com.adobe.cairngorm.navigation.history.WaypointHistoriesEvent")]
+[Event(name="navigateTo", type="com.adobe.cairngorm.navigation.NavigationEvent")]
+[Event(name="navigateAway", type="com.adobe.cairngorm.navigation.NavigationEvent")]
+public class WaypointHistories extends EventDispatcher
+{
+    private var waypointHistories:Dictionary = new Dictionary();
+
+    public function onNavigateTo(event:NavigationEvent):void
     {
-        private var waypointHistories:Dictionary = new Dictionary();
+        var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
+        waypointHistory.onNavigateTo(event);
+    }
 
-        //need to store initial position of waypoint for history.
-        private var firstWaypointEvents:Dictionary = new Dictionary();
+    public function next(event:NavigationEvent):void
+    {
+        var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
+        waypointHistory.next();
+    }
 
-        public function onNavigateTo(event:NavigationEvent):void
+    public function previous(event:NavigationEvent):void
+    {
+        var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
+        waypointHistory.previous();
+    }
+
+    public function update(event:NavigationEvent):void
+    {
+        var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
+
+        if (event.implicit)
         {
-            var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
-            waypointHistory.onNavigateTo(event);
-        }
-
-        public function next(event:NavigationEvent):void
-        {
-            var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
-            waypointHistory.next();
-        }
-
-        public function previous(event:NavigationEvent):void
-        {
-            var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
-            waypointHistory.previous();
-        }
-
-        public function update(event:NavigationEvent):void
-        {
-            var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
             if (waypointHistory)
-            {
+                waypointHistory.onNavigateTo(event);
+        }
+        else
+        {
+            if (waypointHistory)
                 updateWaypointHistory(event);
-            }
             else
-            {
                 waypointHistory = createWaypointHistory(event);
-            }
 
             waypointHistory.onNavigateTo(event);
-        }
-
-        private function createWaypointHistory(event:NavigationEvent):AbstractWaypointHistory
-        {
-            var waypointHistory:AbstractWaypointHistory = new AbstractWaypointHistory();
-            waypointHistory.addEventListener(NavigationEvent.NAVIGATE_TO, dispatchEvent, false, 0, true);
-			waypointHistory.addEventListener(NavigationEvent.NAVIGATE_AWAY, dispatchEvent, false, 0, true);
-            waypointHistory.waypoint = event.waypoint;
-            waypointHistories[event.waypoint] = waypointHistory;
-
-            firstWaypointEvents[event.waypoint] = event;
-            return waypointHistory;
-        }
-
-        private function updateWaypointHistory(event:NavigationEvent):void
-        {
-            var firstEvent:NavigationEvent = firstWaypointEvents[event.waypoint];
-            if (firstEvent && firstEvent.destination == event.destination && firstEvent.type == event.type)
-                throw new Error("Duplicate destination");
-
-            if (firstEvent != null)
-            {
-                dispatchEvent(WaypointHistoriesEvent.newAddEvent(firstEvent));
-                firstWaypointEvents[event.waypoint] = null;
-            }
-            dispatchEvent(WaypointHistoriesEvent.newAddEvent(event));
         }
     }
+
+    private function createWaypointHistory(event:NavigationEvent):AbstractWaypointHistory
+    {
+        var waypointHistory:AbstractWaypointHistory = new AbstractWaypointHistory();
+        waypointHistory.addEventListener(NavigationEvent.NAVIGATE_TO, dispatchEvent, false, 0, true);
+        waypointHistory.addEventListener(NavigationEvent.NAVIGATE_AWAY, dispatchEvent, false, 0, true);
+        waypointHistory.waypoint = event.waypoint;
+        waypointHistories[event.waypoint] = waypointHistory;
+
+        dispatchEvent(WaypointHistoriesEvent.newAddEvent(event));
+
+        return waypointHistory;
+    }
+
+    private function updateWaypointHistory(event:NavigationEvent):void
+    {
+        dispatchEvent(WaypointHistoriesEvent.newAddEvent(event));
+    }
+}
 }
