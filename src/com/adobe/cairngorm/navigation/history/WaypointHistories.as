@@ -46,10 +46,10 @@ public class WaypointHistories extends EventDispatcher
         waypointHistory.next();
     }
 
-    public function previous(event:NavigationEvent):void
+    public function previous(event:NavigationEvent, destination:String=null):void
     {
         var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
-        waypointHistory.previous();
+        waypointHistory.previous(destination);
     }
 
     public function update(event:NavigationEvent):void
@@ -59,7 +59,7 @@ public class WaypointHistories extends EventDispatcher
         if (event.implicit)
         {
             if (waypointHistory)
-                waypointHistory.onNavigateTo(event);
+                waypointHistory.onNavigateTo(event); // TODO: ignore if event is implicit
         }
         else
         {

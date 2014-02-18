@@ -45,10 +45,10 @@ package com.adobe.cairngorm.navigation.history
 			historyChange();
 		}
 
-		override protected function navigateToPrevious(location:Object):void
+		override protected function navigateToPrevious(location:Object, destination:String=null):void
 		{
 			isHistory=true;
-			waypointHistories.previous(NavigationEvent(location));
+			waypointHistories.previous(NavigationEvent(location), destination);
 			historyChange();
 		}
 
@@ -103,8 +103,8 @@ package com.adobe.cairngorm.navigation.history
 		{
 			adjustWhenMovedOutOfHistory();
 
-			history.push(event);
-			historyIndex++;
+            history.push(event);
+            historyIndex++;
 		}
 
 		private function handleWaypointHistory(event:NavigationEvent):void

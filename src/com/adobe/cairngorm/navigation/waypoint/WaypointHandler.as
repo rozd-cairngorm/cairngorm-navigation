@@ -91,7 +91,7 @@ package com.adobe.cairngorm.navigation.waypoint
 		private function landmarkChangeHandler(event:NavigationEvent):void
 		{
 			waypoint.handleNavigationChange(event);
-		}		
+		}
 		
 		private function createConcreteWaypoint(mode:String, waypointType:Class, name:String, isWaypointType:Function):IWaypoint
 		{

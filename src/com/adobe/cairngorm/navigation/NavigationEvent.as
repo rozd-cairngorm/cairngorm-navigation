@@ -119,7 +119,7 @@ public class NavigationEvent extends Event
 
     /**
      * A flag that indicates if this event was created internally by the library,
-     * and could be ignored by History - <code>true</code>, or this even should
+     * and could be ignored for History - <code>true</code>, or this event should
      * be processed by History - <code>false</code>.
      *
      * <p>Note: It make sens for History management only.</p>

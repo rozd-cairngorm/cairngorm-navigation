@@ -49,16 +49,16 @@ package com.adobe.cairngorm.navigation.history
             navigateTo(NavigationEvent(location));
         }
 
-        override protected function navigateToPrevious(location:Object):void
+        override protected function navigateToPrevious(location:Object, destination:String=null):void
         {
             navigateTo(NavigationEvent(location));
         }
 
-        //------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         //
         //  Message Handlers
         //
-        //------------------------------------------------------------------------
+        //----------------------------------------------------------------------
 
         public function onNavigateTo(event:NavigationEvent):void
         {

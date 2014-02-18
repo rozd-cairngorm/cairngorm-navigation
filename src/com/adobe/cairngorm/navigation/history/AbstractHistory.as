@@ -114,7 +114,7 @@ package com.adobe.cairngorm.navigation.history
             return history && history[historyIndex - 1] != null;
         }
 
-        public function next():void
+        public function next(destination:String=null):void
         {
             if (hasNext)
             {
@@ -123,12 +123,29 @@ package com.adobe.cairngorm.navigation.history
             }
         }
 
-        public function previous():void
+        public function previous(destination:String=null):void
         {
-            if (hasPrevious)
+            if (destination != null)
             {
-                hasMovedBackwards = true;
-                navigateToPrevious(history[historyIndex - 1]);
+                if (hasPreviousDestination(destination))
+                {
+                    hasMovedBackwards = true;
+
+                    var index:int = getPreviousDestinationIndex(destination, historyIndex);
+
+                    historyIndex = index + 1;
+
+                    navigateToPrevious(history[index], destination);
+                }
+            }
+            else
+            {
+                if (hasPrevious)
+                {
+                    hasMovedBackwards = true;
+
+                    navigateToPrevious(history[historyIndex - 1]);
+                }
             }
         }
 
@@ -137,7 +154,7 @@ package com.adobe.cairngorm.navigation.history
             throw new Error("Abstract");
         }
 
-        protected function navigateToPrevious(location:Object):void
+        protected function navigateToPrevious(location:Object, destination:String=null):void
         {
             throw new Error("Abstract");
         }
@@ -158,6 +175,30 @@ package com.adobe.cairngorm.navigation.history
         private function hasMovedOutOfHistory():Boolean
         {
             return (historyIndex < history.length - 1);
+        }
+
+        private function getPreviousDestinationIndex(destination:String, index:int):int
+        {
+            for (var i:int = index; i >= 0; i--)
+            {
+                var e:NavigationEvent = history[i];
+
+                if (e.destination == destination)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private function hasPreviousDestination(destination:String):Boolean
+        {
+            for each (var e:NavigationEvent in history)
+            {
+                if (e.destination == destination)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

@@ -33,8 +33,8 @@ package com.adobe.cairngorm.navigation.history
         [Bindable("historyChange")]
         function get hasPrevious():Boolean;
 
-        function next():void;
+        function next(destination:String=null):void;
 
-        function previous():void;
+        function previous(destination:String=null):void;
     }
 }
