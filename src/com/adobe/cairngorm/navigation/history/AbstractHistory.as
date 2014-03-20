@@ -149,6 +149,11 @@ package com.adobe.cairngorm.navigation.history
             }
         }
 
+        public function clear():void
+        {
+            _history.length = 0;
+        }
+
         protected function navigateToNext(location:Object):void
         {
             throw new Error("Abstract");
