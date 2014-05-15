@@ -152,6 +152,8 @@ package com.adobe.cairngorm.navigation.history
         public function clear():void
         {
             _history.length = 0;
+
+            historyIndex = -1;
         }
 
         protected function navigateToNext(location:Object):void
