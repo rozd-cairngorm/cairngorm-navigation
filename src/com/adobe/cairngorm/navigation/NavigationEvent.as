@@ -53,15 +53,15 @@ public class NavigationEvent extends Event
         return createNavigateAwayEvent(destination);
     }
 
-    public static function createNavigateToEvent(destination:String, implicit:Boolean=false):NavigationEvent
+    public static function createNavigateToEvent(destination:String, implicit:Boolean=false, params:Object = null):NavigationEvent
     {
-        var event:NavigationEvent=new NavigationEvent(NAVIGATE_TO, destination, implicit);
+        var event:NavigationEvent=new NavigationEvent(NAVIGATE_TO, destination, implicit, true, false, params);
         return event;
     }
 
-    public static function createNavigateAwayEvent(destination:String, implicit:Boolean=false):NavigationEvent
+    public static function createNavigateAwayEvent(destination:String, implicit:Boolean=false, params:Object = null):NavigationEvent
     {
-        var event:NavigationEvent=new NavigationEvent(NAVIGATE_AWAY, destination, implicit);
+        var event:NavigationEvent=new NavigationEvent(NAVIGATE_AWAY, destination, implicit, true, false, params);
         return event;
     }
 
@@ -71,11 +71,12 @@ public class NavigationEvent extends Event
     //
     //------------------------------------------------------------------------
 
-    public function NavigationEvent(type:String, destination:String, implicit:Boolean, bubbles:Boolean=true, cancelable:Boolean=false)
+    public function NavigationEvent(type:String, destination:String, implicit:Boolean, bubbles:Boolean=true, cancelable:Boolean=false, params:Object = null)
     {
         super(type, bubbles, cancelable);
         _destination=destination;
         _implicit = implicit;
+        _params = params;
     }
 
     //------------------------------------------------------------------------
@@ -129,6 +130,17 @@ public class NavigationEvent extends Event
         return _implicit;
     }
 
+    //-------------------------------
+    //  params
+    //-------------------------------
+
+    private var _params:Object;
+
+    public function get params():Object
+    {
+        return _params;
+    }
+
     //------------------------------------------------------------------------
     //
     //  Overrides : Event
@@ -137,7 +149,7 @@ public class NavigationEvent extends Event
 
     override public function clone():Event
     {
-        var event:NavigationEvent=new NavigationEvent(type, destination, implicit, bubbles, cancelable);
+        var event:NavigationEvent=new NavigationEvent(type, destination, implicit, bubbles, cancelable, params);
         return event;
     }
 }
