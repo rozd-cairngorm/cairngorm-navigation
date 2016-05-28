@@ -190,7 +190,7 @@ package com.adobe.cairngorm.navigation.history
             {
                 var e:NavigationEvent = history[i];
 
-                if (e.destination == destination)
+                if (e != null && e.destination == destination)
                     return i;
             }
 

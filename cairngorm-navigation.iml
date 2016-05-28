@@ -6,7 +6,7 @@
         <dependencies target-player="20.0">
           <entries>
             <entry library-id="bed5f13e-6808-456a-b713-c7d765891716">
-              <dependency linkage="Merged" />
+              <dependency linkage="External" />
             </entry>
           </entries>
           <sdk name="20.0.0" />
