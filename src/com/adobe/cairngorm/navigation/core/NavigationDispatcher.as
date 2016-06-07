@@ -160,7 +160,10 @@ public class NavigationDispatcher
             var newWaypoint:String = NavigationUtil.getParent(newDestination);
             if (newWaypoint == null)
                 return;
-            if (isWithinWaypointOrFirstWaypoint(oldWaypoint, newWaypoint) && oldDestination != newDestination)
+
+            // if (isWithinWaypointOrFirstWaypoint(oldWaypoint, newWaypoint)) && oldDestination != newDestination)
+
+            if (isWithinWaypointOrFirstWaypoint(oldWaypoint, newWaypoint))
             {
                 var event:NavigationActionEvent = new NavigationActionEvent(newWaypoint,
                                                                             oldDestination,
