@@ -53,15 +53,15 @@ public class NavigationEvent extends Event
         return createNavigateAwayEvent(destination);
     }
 
-    public static function createNavigateToEvent(destination:String, implicit:Boolean=false, params:Object = null):NavigationEvent
+    public static function createNavigateToEvent(destination:String, params:Object = null):NavigationEvent
     {
-        var event:NavigationEvent=new NavigationEvent(NAVIGATE_TO, destination, implicit, true, false, params);
+        var event:NavigationEvent=new NavigationEvent(NAVIGATE_TO, destination, true, false, params);
         return event;
     }
 
-    public static function createNavigateAwayEvent(destination:String, implicit:Boolean=false, params:Object = null):NavigationEvent
+    public static function createNavigateAwayEvent(destination:String, params:Object = null):NavigationEvent
     {
-        var event:NavigationEvent=new NavigationEvent(NAVIGATE_AWAY, destination, implicit, true, false, params);
+        var event:NavigationEvent=new NavigationEvent(NAVIGATE_AWAY, destination, true, false, params);
         return event;
     }
 
@@ -71,11 +71,10 @@ public class NavigationEvent extends Event
     //
     //------------------------------------------------------------------------
 
-    public function NavigationEvent(type:String, destination:String, implicit:Boolean, bubbles:Boolean=true, cancelable:Boolean=false, params:Object = null)
+    public function NavigationEvent(type:String, destination:String, bubbles:Boolean=true, cancelable:Boolean=false, params:Object = null)
     {
         super(type, bubbles, cancelable);
         _destination=destination;
-        _implicit = implicit;
         _params = params;
     }
 
@@ -113,24 +112,6 @@ public class NavigationEvent extends Event
     }
 
     //-------------------------------
-    //  implicit
-    //-------------------------------
-
-    private var _implicit:Boolean;
-
-    /**
-     * A flag that indicates if this event was created internally by the library,
-     * and could be ignored for History - <code>true</code>, or this event should
-     * be processed by History - <code>false</code>.
-     *
-     * <p>Note: It make sens for History management only.</p>
-     */
-    public function get implicit():Boolean
-    {
-        return _implicit;
-    }
-
-    //-------------------------------
     //  params
     //-------------------------------
 
@@ -149,7 +130,7 @@ public class NavigationEvent extends Event
 
     override public function clone():Event
     {
-        var event:NavigationEvent=new NavigationEvent(type, destination, implicit, bubbles, cancelable, params);
+        var event:NavigationEvent=new NavigationEvent(type, destination, bubbles, cancelable, params);
         return event;
     }
 }

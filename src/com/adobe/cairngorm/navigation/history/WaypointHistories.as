@@ -56,20 +56,12 @@ public class WaypointHistories extends EventDispatcher
     {
         var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
 
-        if (event.implicit)
-        {
-            if (waypointHistory)
-                waypointHistory.onNavigateTo(event); // TODO: ignore if event is implicit
-        }
+        if (waypointHistory)
+            updateWaypointHistory(event);
         else
-        {
-            if (waypointHistory)
-                updateWaypointHistory(event);
-            else
-                waypointHistory = createWaypointHistory(event);
+            waypointHistory = createWaypointHistory(event);
 
-            waypointHistory.onNavigateTo(event);
-        }
+        waypointHistory.onNavigateTo(event);
     }
 
     private function createWaypointHistory(event:NavigationEvent):AbstractWaypointHistory

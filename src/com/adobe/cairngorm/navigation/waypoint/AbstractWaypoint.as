@@ -47,9 +47,7 @@ package com.adobe.cairngorm.navigation.waypoint
 
         protected function navigateTo(destination:String):void
         {
-            // dispatch implicit event, because navigation caused by waypoint
-            // container's change event we don't need to add this event to History.
-            dispatchEvent(NavigationEvent.createNavigateToEvent(destination, true));
+            dispatchEvent(NavigationEvent.createNavigateToEvent(destination));
         }
     }
 }
