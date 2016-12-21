@@ -102,6 +102,24 @@ package com.adobe.cairngorm.navigation
 			return isTrue;
 		}
 
+        public static function hasSameWaypointAtEachLevel(destination1:String, destination2:String):Boolean
+        {
+            var isTrue:Boolean = true;
+            var first:Array = destination1.split(".");
+            var second:Array = destination2.split(".");
+
+            var length:int=Math.min(first.length, second.length);
+            for (var i:int; i < length; i++)
+            {
+                if (first[i] != second[i])
+                {
+                    isTrue = false;
+                    break;
+                }
+            }
+            return isTrue;
+        }
+
 		public static function getDifference(destination1:String, destination2:String):String
 		{
 			var difference:String;

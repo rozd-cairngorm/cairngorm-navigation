@@ -178,6 +178,7 @@ public class NavigationDispatcher
         private function isWithinWaypointOrFirstWaypoint(oldWaypoint:String, newWaypoint:String):Boolean
         {
             return (oldWaypoint == newWaypoint || oldWaypoint == null);
+//            return oldWaypoint == null || (oldWaypoint.indexOf(newWaypoint) == 0 && NavigationUtil.hasSameWaypointAtEachLevel(oldWaypoint, newWaypoint));
         }
 
         private function dispatchActionChange(type:String, oldDestination:String,
