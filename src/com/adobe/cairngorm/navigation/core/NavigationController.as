@@ -102,7 +102,7 @@ package com.adobe.cairngorm.navigation.core
 
 		public function navigateTo(newDestination:String, finalDestination:String=null):Boolean
 		{
-			var success:Boolean;
+			var success:Boolean = true;
 
 			var item:DestinationStateController=destinations.getValidDestination(newDestination);
 			if (item == null)
@@ -119,9 +119,25 @@ package com.adobe.cairngorm.navigation.core
 				return false;
 			}
 
+            var destinationItem:DestinationStateController = destinations.getDestination(NavigationUtil.getParent(newDestination));
+
+			if (destinationItem != null)
+			{
+				destinationItem.hasExplicitDestination = true;
+			}
+
 			var hasEnterIntercept:Boolean=enterAndExitInvoker.applyEnters(newDestination, finalDestination);
 
-			success=!hasEnterIntercept
+			if (destinationItem != null)
+            {
+                destinationItem.hasExplicitDestination = false;
+            }
+
+            if (hasEnterIntercept)
+            {
+                return false;
+            }
+
 
 			return success;
 		}

@@ -134,6 +134,11 @@ package com.adobe.cairngorm.navigation.waypoint
 					landmarkChangeHandler(navigationEvent);
 					controller.destinations.removePending(pending);
 				}
+				else if (controller.destinations.getDestination(registration.waypointName) &&
+                         controller.destinations.getDestination(registration.waypointName).hasExplicitDestination)
+				{
+					return;
+				}
 				else
 				{
 					initializeDefaultDestination();

@@ -45,6 +45,8 @@ package com.adobe.cairngorm.navigation.core
 		
 		public var isWaypointAvailable:Boolean;
 
+        public var hasExplicitDestination:Boolean;
+
         public function DestinationStateController(destination:String)
         {
             _destination = destination;
