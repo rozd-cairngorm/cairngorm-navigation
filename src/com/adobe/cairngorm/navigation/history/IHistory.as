@@ -35,7 +35,7 @@ package com.adobe.cairngorm.navigation.history
 
         function next(destination:String=null):void;
 
-        function previous(destination:String=null):void;
+        function previous(destination:String=null):Boolean;
 
         function clear():void;
     }

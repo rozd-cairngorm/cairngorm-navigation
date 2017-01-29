@@ -123,7 +123,7 @@ package com.adobe.cairngorm.navigation.history
             }
         }
 
-        public function previous(destination:String=null):void
+        public function previous(destination:String=null):Boolean
         {
             if (destination != null)
             {
@@ -136,6 +136,8 @@ package com.adobe.cairngorm.navigation.history
                     historyIndex = index + 1;
 
                     navigateToPrevious(history[index], destination);
+
+                    return true;
                 }
             }
             else
@@ -145,8 +147,12 @@ package com.adobe.cairngorm.navigation.history
                     hasMovedBackwards = true;
 
                     navigateToPrevious(history[historyIndex - 1]);
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         public function clear():void

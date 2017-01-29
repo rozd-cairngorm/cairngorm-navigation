@@ -23,6 +23,7 @@
 package com.adobe.cairngorm.navigation.history
 {
 import com.adobe.cairngorm.navigation.NavigationEvent;
+import com.adobe.cairngorm.navigation.NavigationUtil;
 
 import flash.events.EventDispatcher;
 import flash.utils.Dictionary;
@@ -48,8 +49,14 @@ public class WaypointHistories extends EventDispatcher
 
     public function previous(event:NavigationEvent, destination:String=null):void
     {
-        var waypointHistory:AbstractWaypointHistory = waypointHistories[event.waypoint];
-        waypointHistory.previous(destination);
+        var waypoint:String = event.waypoint;
+        var waypointHistory:AbstractWaypointHistory = waypointHistories[waypoint];
+
+        while (waypointHistory != null && !waypointHistory.previous(destination))
+        {
+            waypoint = NavigationUtil.getParent(waypoint);
+            waypointHistory = waypointHistories[waypoint];
+        }
     }
 
     public function update(event:NavigationEvent):void
